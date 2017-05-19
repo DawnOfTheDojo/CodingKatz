@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title>Login and Register</title>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta name="#" content="#">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- jQuery compiled and minified v3.2.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Fonts -->
+    
+    <!-- Main styles -->
+    <link rel="stylesheet" href="{% static 'LoginAndRegistration/css/styles2.css' %}">
+  </head>
+	<body>
+		<!-- Navbar -->
+	    <nav class="navbar navbar-default">
+	      <div class="container-fluid">
+	        <div class="navbar-header">
+	          <!-- <a class="navbar-brand" href="#"> -->
+	            <img alt="Brand" src="{% static 'LoginAndRegistration/images/code-icon.png' %}" id="code-icon">
+	          <!-- </a> -->
+	        </div>
+	      </div>
+	    </nav>
+		<!-- jumbotron-->
+   	<header class="container">
+   		<section class="row">
+				<div class="jumbotron">
+					<h1>*TITLE HERE* this.social</h1>
+					<div class="row">
+						<div class="col-md-5"></div>
+						<div class="col-md-2">
+						<img src="http://placehold.it/180x150">
+						<p><em>** icon of logo **</em></p>
+						</div>
+						<div class="col-md-5"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-2">
+							<img src="http://placehold.it/185x50" id="fb-login">
+							<p><em>button for login w/ facebook</em></p>
+						</div>
+						<div class="col-md-4"></div>
+						<div class="col-md-2">
+							<img src="http://placehold.it/185x50" id="gh-login">
+							<p><em>button for login w/ github</em></p>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+				</div>
+			</section>
+      </header>
+	</body>
+</html>

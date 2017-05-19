@@ -3,8 +3,11 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-def index(request):
-    return render(request, 'LoginAndRegistration/index.html')
+def index1(request):
+    return render(request, 'LoginAndRegistration/index1.html')
+    
+def index2(request):
+    return render(request, 'LoginAndRegistration/index2.html')
 
 def login(request):
     #Get email and password from landing page form
