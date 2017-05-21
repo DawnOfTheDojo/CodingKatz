@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -60,3 +61,119 @@
       </header>
 	</body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="{% static 'LoginAndRegistration/css/style0.css' %}">
+
+    <title>Landing Page</title>
+  </head>
+  <body>
+
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainnav">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="#"><h4 >Placeholder</h4></a>
+          </div>
+          <div class="collapse navbar-right navbar-collapse" id="mainnav">
+            <ul class="nav nav-pills">
+              <li role="presentation"><a href="#">My page</a></li>
+              <li role="presentation"><a href="#">Social</a></li>
+              <li role="presentation"><a href="#">About us</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div id="content">
+
+      <header class="row">
+        <h1>Welcome to INSERTNAMEHERE</h1>
+        <p>A place for Coding Dojo students past and present to socialize and talk about anything and everything, including code.</p>
+      </header>
+
+
+        <div id="forms">
+
+          <h4 class="login">New here?  Get registered here.</h4>
+          <h4 class="register">Go here to login</h4>
+          <div class="container toggle login col-lg-12 col-md-12 col-sm-12 col-xs-12" id="login_form">
+            <form action="/login" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="login_email">email:</label>
+                <input type="email" name="email" id="login_email" class="form-control" placeholder="jack@coding.com">
+              </div>
+              <div class="form-group">
+                <label for="login_password">Password:</label>
+                <input type="password" name="password" id="login_password" class="form-control" placeholder="********">
+              </div>
+                <button type="submit" class="btn btn-default">Log In</button>
+            </form>
+          </div>
+
+          <div class="container toggle register col-lg-12 col-md-12 col-sm-12 col-xs-12" id="registration_form">
+            <form action="/register" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" id="first_name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" id="last_name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="email">email:</label>
+                <input type="email" name="email" id="email" class="form-control">
+                <small id="emailHelp" class="form-text text-muted" >We will not share your email with anyone else.</small>
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control">
+              </div>
+                <button type="submit" name="button" class="btn btn-default">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+    console.log("first test")
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'LoginAndRegistration/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'LoginAndRegistration/js/scripts.js' %}"></script>
+    <script>
+    $(document).ready(function(){
+
+      $('.register').toggle();
+      $('h4').on("click", function() {
+        $('.login').toggle();
+        $('.register').toggle();
+      });
+
+
+    });
+    </script>
+  </body>
+</html>
+>>>>>>> master
