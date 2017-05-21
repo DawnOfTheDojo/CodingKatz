@@ -6,6 +6,9 @@ from django.contrib import messages
 def index(request):
     return render(request, 'LoginAndRegistration/index.html')
 
+def first(request):
+    return render(request, 'LoginAndRegistration/index2.html')
+
 def login(request):
     #Get email and password from landing page form
     request.session['email'] = request.POST['email']
