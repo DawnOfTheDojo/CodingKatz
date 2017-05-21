@@ -2,44 +2,48 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .models import userDB
 
-def index(request):
-    return render(request, 'LoginAndRegistration/index.html')
-
-def first(request):
+def index1(request):
+    return render(request, 'LoginAndRegistration/index1.html')
+    
+def index2(request):
     return render(request, 'LoginAndRegistration/index2.html')
 
 def login(request):
-    #Get email and password from landing page form
-    request.session['email'] = request.POST['email']
-    request.session['password'] = request.POST['password']
-
-    #Validate information
-
-    #Once message is flashed, redirect user with login information still in form to be corrected.
-    # if messages.error:
-    #     return redirect('/')
-
-    #Redirect user to the wall once information is validated
-    return redirect('/wall')
+    if request.method == "POST":
+        #Validate information
+        response = userDB.objects.login_check(request.POST)
+        #Show errors and redirect to index if information incorrect
+        if not response[0]:
+            for error in response[1]:
+                messages.error(request, error[1])
+            return redirect('/')
+        else:
+            request.session['user'] = {
+                "first_name": response[1].first_name,
+                "last_name": response[1].last_name,
+                "id": response[1].id,
+            }
+            #Redirect user to the wall once information is validated
+        return redirect('/wall')
 
 def register(request):
-    #Get information for user from registration form
-    user = {
-        'first_name': request.POST['first_name'],
-        'last_name': request.POST['last_name'],
-        'email': request.POST['email'],
-        'password': request.POST['password'],
-        'confirm_password': request.POST['confirm_password'],
-    }
-
-    #Validate information
-
-    #Enter information into database
-
-    #Capture user_id in session
-
-    #Redirect user to the wall once information is validated and entered into databases
-    return redirect('/wall')
+    if request.method == "POST":
+        #Validate information
+        response = userDB.objects.user_check(request.POST)
+        #Show errors and redirect to index if information incorrect
+        if not response[0]:
+            for error in response[1]:
+                messages.error(request, error[1])
+            return redirect('/')
+        else:
+            request.session['user'] = {
+                "first_name": response[1].first_name,
+                "last_name": response[1].last_name,
+                "id": response[1].id,
+            }
+            #Redirect user to the wall once information is validated and entered into databases
+            return redirect('/wall')
 
 # Create your views here.
