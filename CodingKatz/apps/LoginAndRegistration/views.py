@@ -4,8 +4,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import userDB
 
-def index(request):
-    return render(request, 'LoginAndRegistration/index.html')
+def index1(request):
+    return render(request, 'LoginAndRegistration/index1.html')
+    
+def index2(request):
+    return render(request, 'LoginAndRegistration/index2.html')
 
 def login(request):
     if request.method == "POST":
