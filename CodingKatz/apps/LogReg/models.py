@@ -6,7 +6,7 @@ import re
 EMAILREG = re.compile(r'[a-zA-Z0-9.-_+]+@[a-zA-Z0-9.-_]+\.[a-zA-Z]*$')
 
 class userDBManager(models.Manager):
-    def user_check(self, data):
+    def check_create(self, data):
         errors = []
         if len(data['first_name']) < 2:
             errors.append(['first_name', "First name must be at least two characters in length."])
@@ -21,7 +21,7 @@ class userDBManager(models.Manager):
             newUser.save()
             return [True, newUser]
 
-    def login_check(self, data):
+    def check_login(self, data):
         errors = []
         if not re.match(EMAILREG, data['email']):
             errors.append(['email', "Email must be a valid email address."])
@@ -30,14 +30,17 @@ class userDBManager(models.Manager):
         if errors:
             return [False, errors]
         else:
-            check_user = userDB.objects.filter(email=data['email'], password=data['password'])
+            check_user = userDB.objects.filter(email=data['email'])
             if not check_user:
+                errors.append(['login', "Email or password not correct.  Please try again."])
+            if not bcrypt.checkpw(data['password'].encode(), check_user[0].password.encode()):
                 errors.append(['login', "Email or password not correct.  Please try again."])
             if errors:
                 return [False, errors]
             else:
-                return [True, check_user]
-
+                user = check_user[0]
+                print user
+                return [True, user]
 # Create your models here.
 class userDB(models.Model):
     first_name=models.CharField(max_length=100)
@@ -46,5 +49,6 @@ class userDB(models.Model):
     password=models.CharField(max_length=100)
     created_at=DateTimeField(auto_now_add=True)
     updated_at=DateTimeField(auto_add=True)
-
+    def __str__(self):
+        return 'ID: %s | Name: %s %s | Email: %s' % (self.id, self.first_name, self.last_name, self.email)
     objects = userDBManager()
