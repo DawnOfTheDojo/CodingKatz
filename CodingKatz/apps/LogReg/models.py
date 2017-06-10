@@ -17,7 +17,13 @@ class userDBManager(models.Manager):
         if errors:
             return [False, errors]
         else:
-            newUser = userDB(first_name=data['first_name'], last_name=data['last_name'], email=data['email'], password=data['password'])
+            user_check = userDB.objects.filter(username=data['username'])
+            if user_check:
+                errors.append(['user_check', 'Unable to register, please use alternate information.'])
+                return [False, errors]
+            newUser = userDB(name=data['name'], username=data['username'])
+            hashed_pass = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
+            newUser.password = hashed_pass
             newUser.save()
             return [True, newUser]
 
@@ -27,6 +33,8 @@ class userDBManager(models.Manager):
             errors.append(['email', "Email must be a valid email address."])
         if len(data['password']) < 8:
             errors.append(['password', 'Password must be at least 8 characters.'])
+        if len(data['email']) < 5:
+            errors.append(['email', 'Email must be entered.'])
         if errors:
             return [False, errors]
         else:
