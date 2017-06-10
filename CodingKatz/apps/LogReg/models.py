@@ -55,8 +55,8 @@ class userDB(models.Model):
     last_name=models.CharField(max_length=100)
     email=models.CharField(max_length=100)
     password=models.CharField(max_length=100)
-    created_at=DateTimeField(auto_now_add=True)
-    updated_at=DateTimeField(auto_add=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
     def __str__(self):
         return 'ID: %s | Name: %s %s | Email: %s' % (self.id, self.first_name, self.last_name, self.email)
     objects = userDBManager()
