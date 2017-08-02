@@ -2,15 +2,29 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>The Wall</title>
+    <title>{{ user.first_name }}'s Wall</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Wall/css/style.css' %}">
   </head>
   <body>
     <a href="{% url 'User:profile' %}">Profile</a>
-    <a href="{% url 'LogReg:logout' %}">Logout</a>
-    <h1>Welcome to the Wall {{ user.first_name }} !</h1>
-    {#<!-- put link to profile in nav -->#}
-    {#<!-- form to create message -->#}
-    {#<!-- show all messages and comments from all users with author of each hyperlinked  -->#}
+    <a href="{% url 'Wall:wall' %}">The Wall</a>
+    <!-- user info then messages-->
+    <h2>{{user.first_name}} {{user.last_name}}</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Member Since: </td>
+          <!-- time is showing 3 hours ahead but this fix does not work -->
+          {% load tz %}
+          {% localtime on %}
+          <td>{{user.created_at}}</td>
+          {% endlocaltime %}
+        </tr>
+    <!-- CONSIDER OTHER STATS TO ADD HERE -->
+      </tbody>
+    </table>
+    <h2>Leave a message for {{user.first_name}}</h2>
     <div class="flash_messages">
       {% if messages %}
         {% for message in messages %}

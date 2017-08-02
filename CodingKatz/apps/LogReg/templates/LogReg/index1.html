@@ -14,9 +14,9 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- Fonts -->
-    
+
     <!-- Main styles -->
-    <link rel="stylesheet" href="{% static 'LoginAndRegistration/css/styles1.css' %}">
+    <link rel="stylesheet" href="{% static 'LogReg/css/styles1.css' %}">
   </head>
   <body>
   <!-- Navbar -->
@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <!-- <a class="navbar-brand" href="#"> -->
-            <img alt="Brand" src="{% static 'LoginAndRegistration/images/code-icon.png' %}" id="code-icon">
+            <img alt="Brand" src="{% static 'LogReg/images/code-icon.png' %}" id="code-icon">
           <!-- </a> -->
         </div>
       </div>
@@ -37,7 +37,7 @@
             {% csrf_token %}
             <div class="form-group">
             <div>
-              <label for="login_email">Email</label>           
+              <label for="login_email">Email</label>
               <input type="email" name="email" id="login_email" placeholder="jack@coding.com">
             </div>
             <div>

@@ -18,9 +18,12 @@ def index3(request):
 
 def log_reg(request):
     if request.method == "POST":
+        print 'attempt: ', request.POST['attempt']
         if request.POST['attempt'] == "register":
+            request.session['attempt'] = 'register'
             response = userDB.objects.check_create(request.POST)
         elif request.POST['attempt'] == 'login':
+            request.session['attempt'] = 'login'
             response = userDB.objects.check_login(request.POST)
         if not response[0]:
             for error in response[1]:

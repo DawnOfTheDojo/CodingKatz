@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{user.first_name}}'s Page</title>
+  </head>
+  <body>
+    <a href="{% url 'Wall:wall' %}">The Wall</a>
+    <a href="{% url 'LogReg:logout' %}">Logout</a>
+    <h1>{{user.first_name}}'s Page</h1>
+
+    <h2>Edit Your Info</h2>
+
+    <div class="container">
+      {% if messages %}
+      {% for message in messages%}
+      <p class="error">{{ message }}</p>
+      {% endfor %}
+      {% endif %}
+      <form action="{% url 'User:edit' %}" method="POST">
+        {% csrf_token %}
+        <label for="inputFirstName">First Name</label>
+        <input id="inputFirstName" type="text" name="first_name" placeholder="{{user.first_name}}" class="form-control" autofocus>
+        <label for="inputLastName">Last Name</label>
+        <input id="inputLastName" type="text" name="last_name" placeholder="{{user.last_name}}" class="form-control">
+        <label for="inputEmail">Email address</label>
+        <input id="inputEmail" type="email" name="email" class="form-control" placeholder="{{user.email}}">
+        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
+        <label for="inputConfirmPassword">Confirm Password:</label>
+        <input type="password" name="confirmPassword" id="inputConfirmPassword" class="form-control" placeholder="confirm password entry">
+        <button class="btn btn-lg btn-primary btn-block submit" type="submit" >Submit</button>
+      </form>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
