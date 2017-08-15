@@ -1,61 +1,118 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>The Wall</title>
-  </head>
-  <body>
-    <a href="{% url 'User:profile' %}">Profile</a>
-    <a href="{% url 'LogReg:logout' %}">Logout</a>
-    <h1>Welcome to the Wall {{ user.first_name }} !</h1>
-    {#<!-- put link to profile in nav -->#}
-    {#<!-- form to create message -->#}
-    {#<!-- show all messages and comments from all users with author of each hyperlinked  -->#}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Cinzel|Cormorant+SC|Noto+Serif" rel="stylesheet">
+
+  <!-- css stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+  <link rel="stylesheet" href="{% static 'Wall/css/style.css' %}">
+
+  <!-- scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+  </script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="{% static 'Wall/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'Wall/js/scripts.js' %}"></script>
+
+  <title>The Wall</title>
+</head>
+
+<body>
+    <div class="row">
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="navbar-form navbar-right">
+          <li><a href="{% url 'User:profile' %}">Profile</a></li>
+          <li><a href="{% url 'LogReg:logout' %}">Logout</a></li>
+        </ul>
+      </div><!--/.navbar-collapse -->
+    </div>
+
+
+    <div id="main" class="container">
+      <div class="row">
+        <h1>Welcome to the Wall {{ user.first_name }} !</h1>
+      </div>
+    <!-- put link to profile in nav -->
+    <!-- form to create message -->
+    <!-- show all messages and comments from all users with author of each hyperlinked  -->
+    <div id="post" class="row">
     <div class="flash_messages">
       {% if messages %}
-        {% for message in messages %}
-          <p class="error">{{message}}</p>
-        {% endfor %}
+      {% for message in messages %}
+      <p class="error">{{message}}</p>
+      {% endfor %}
       {% endif %}
     </div>
-    <form action="{% url 'Wall:message' %}" method="post">
+    <form action="{% url 'Wall:message' %}" method="post" class="form-message">
       {% csrf_token %}
-      <textarea name="message" rows="8" cols="80">Write your message here</textarea>
-      <button type="submit" name="button">Post</button>
+      <label class="msg">Post a message</label>
+      <div class="form-group">
+        <textarea name="message" rows="4" cols="80" placeholder="Write your message here"></textarea>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit" name="button">Post</button>
+      </div>
     </form>
-    {% for message in all_messages %}
-    <div class="label">
-      <a href="{% url 'Wall:show_user' message.author.id %}" class='label_left'>{{message.author.first_name}} {{message.author.last_name}}</a>
-      <p class="label_right">{{message.created_at|timesince}} ago</p>
-    </div>
-    <div class="message">
-      <p>{{message.message}}</p>
-      {% for comment in comments %}
+  </div>
+  <div class="row">
+    {% for message in all_messages %}    <!-- messages for -->
+    <div id="messages">
+      <div class="message">
+        <p>{{message.message}}</p>
+        <h5><a href="{% url 'Wall:show_user' message.author.id %}" class='label_left'>{{message.author.first_name}} {{message.author.last_name}}</a></h5>
+        <p class="label_right">{{message.created_at|timesince}} ago</p>
+
+      </div>
+      {% for comment in comments %}     <!-- comments for -->
       <div class="comments">
         {% if message.id == comment.message.id %}
-        <div class="label">
-          <a href="{% url 'Wall:show_user' comment.author.id %}">{{comment.author.first_name}} {{comment.author.last_name}}</a>
-          <p class="label_right">{{comment.created_at|timesince}} ago</p>
-        </div>
         <div class="comment">
           <p>{{comment.comment}}</p>
+            <h5 class="label_right">
+              <a href="{% url 'Wall:show_user' comment.author.id %}">{{comment.author.first_name}} {{comment.author.last_name}}</a><br>
+            {{comment.created_at|timesince}} ago</h5>
+            <hr>
         </div>
-        {% endif %}
-      </div>
-      {% endfor %}
+        {% endif %}        <!-- close row 70 if -->
+
       <div class="flash_messages">
         {% if messages %}
-          {% for message in messages %}
-            <p class="error">{{message}}</p>
-          {% endfor %}
+        {% for message in messages %}
+        <p class="error">{{message}}</p>
+        {% endfor %}
         {% endif %}
       </div>
-      <form action="{% url 'Wall:comment' message_id=message.id %}" method="post">
-        {% csrf_token %}
-        <textarea name="comment" rows="4" cols="80">Write your comment here</textarea>
-        <button type="submit" name="button">Post</button>
-      </form>
+
     </div>
     {% endfor %}
-  </body>
+    <h6 class="comment_label">Post a comment</h6>
+    <form action="{% url 'Wall:comment' message_id=message.id %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea name="comment" rows="1" cols="80" placeholder="Write your comment here"></textarea>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-success" type="submit" name="button">Comment</button>
+      </div>
+    </form>
+
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</body>
+
 </html>
