@@ -1,7 +1,7 @@
 body {
   font-family: "Raleway", "BioRhyme", "Fira Sans", sans-serif;
   background-color: hsl(0, 1%, 98%);
-  background-image: url("../img/dsBack.png");
+  background-image: url("../img/bcgd.png");
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -11,7 +11,7 @@ h5 {
   font-weight: bold;
 }
 
-.form-message {
+.form-signin {
   margin: 0 20%;
 }
 
@@ -21,6 +21,7 @@ h5 {
 
 #navbar>ul {
   list-style: none;
+  margin-top: 15px;
 }
 
 #navbar>ul>li {
@@ -28,9 +29,12 @@ h5 {
   margin: 0 15px;
 }
 
+li>a {
+  color: #fff;
+}
 
 .jumbotron {
-  background-image: url("../img/wall3.jpg");
+  background-image: url("../img/tables.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-position: bottom;
@@ -82,19 +86,6 @@ td, th{
 #comments>ul {
   list-style-type: none;
   font-style: italic;
-}
-
-#messages .message {
-  background-color: #eee;
-  border: 1px solid #aaa;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-.comment {
-  padding: 10px;
-  margin: 10px 0;
 }
 
 .separator {
