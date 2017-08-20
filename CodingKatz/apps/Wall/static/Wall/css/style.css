@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Merienda:400,700');
+
 body {
-  font-family: "Raleway", "BioRhyme", "Fira Sans", sans-serif;
+  font-family: "Raleway", sans-serif;
   background-color: hsl(0, 1%, 98%);
   background-image: url("../img/bcgd.png");
   background-size: cover;
@@ -16,7 +18,11 @@ h5 {
 }
 
 .jumboText {
-  font-family: 'Rock Salt';
+  font-family: 'Merienda', cursive;
+}
+
+.header-table {
+  color: #fff;
 }
 
 #navbar>ul {
@@ -79,7 +85,7 @@ td, th{
 }
 
 #messages {
-  margin: 0 22%;
+  margin: 0 10%;
   margin-top: 20px;;
 }
 
@@ -96,4 +102,8 @@ td, th{
 
 #user {
   margin-left: 20%;
+}
+
+.divcheck {
+  outline: 3px solid red;
 }
