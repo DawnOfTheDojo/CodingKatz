@@ -12,8 +12,8 @@ def wall(request):
         author = userDB.objects.get(id=request.session['user']['id'])
         context = {
             'user': author,
-            'all_messages': Message.objects.all(),
-            'comments': Comment.objects.all()
+            'all_messages': Message.objects.all().order_by('id').reverse(),
+            'comments': Comment.objects.all().order_by('id')
         }
         return render(request, 'Wall/wall.html', context)
     return redirect('LogReg:index')
@@ -65,8 +65,8 @@ def show_user(request, user_id):
     author = userDB.objects.get(id = user_id)
     context = {
         'user': author,
-        'all_messages': Message.objects.filter(author=author),
-        'comments': Comment.objects.all(),
+        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+        'comments': Comment.objects.all().order_by('id')
     }
     return render(request, 'Wall/user.html', context)
 
