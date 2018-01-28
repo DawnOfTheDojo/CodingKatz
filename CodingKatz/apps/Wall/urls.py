@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from . import views
 
+app_name="Wall"
+
 urlpatterns = [
     url(r'^wall', views.wall, name="wall"),
     url(r'^message', views.message, name="message"),

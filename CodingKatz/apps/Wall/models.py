@@ -36,7 +36,7 @@ class commentManager(models.Manager):
 
 class Message(models.Model):
     message = models.TextField()
-    author = models.ForeignKey(userDB, related_name='message_author')
+    author = models.ForeignKey(userDB, related_name='message_author', on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -44,8 +44,8 @@ class Message(models.Model):
 
 class Comment(models.Model):
     comment = models.TextField()
-    message = models.ForeignKey(Message, related_name='comment_message')
-    author = models.ForeignKey(userDB, related_name='comment_author')
+    message = models.ForeignKey(Message, related_name='comment_message', on_delete=models.PROTECT)
+    author = models.ForeignKey(userDB, related_name='comment_author', on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

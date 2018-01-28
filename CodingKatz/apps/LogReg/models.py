@@ -27,7 +27,7 @@ class userDBManager(models.Manager):
                 errors.append(['user_check', 'Unable to register, please use alternate email.'])
                 return [False, errors]
             newUser = userDB(first_name=data['first_name'], last_name=data['last_name'], email=data['email'])
-            hashed_pass = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
+            hashed_pass = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt()).decode('utf-8')
             newUser.password = hashed_pass
             newUser.save()
             return [True, newUser]
@@ -52,12 +52,12 @@ class userDBManager(models.Manager):
                 return [False, errors]
             else:
                 user = check_user[0]
-                print user
+                print (user)
                 return [True, user]
 
     #edit user info
     def check_info_edit(self, data, id):
-        print data
+        print (data)
         errors = []
         if len(data['first_name']) < 2:
             errors.append(['first_name', "First name must be at least two characters in length."])
