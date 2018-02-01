@@ -36,8 +36,6 @@ class userDBManager(models.Manager):
         errors = []
         if not re.match(EMAILREG, data['email']):
             errors.append(['email', "Email must be a valid email address."])
-        if len(data['password']) < 8:
-            errors.append(['password', 'Password must be at least 8 characters.'])
         if len(data['email']) < 5:
             errors.append(['email', 'Email must be entered.'])
         if errors:

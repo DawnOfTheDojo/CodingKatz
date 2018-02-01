@@ -7,20 +7,15 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="{% static 'LogReg/css/normalize.css' %}">
   <link rel="stylesheet" href="{% static 'LogReg/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'LogReg/css/style0.css' %}">
-  <link rel="stylesheet" href="{% static 'LogReg/css/style1.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'LogReg/css/style0.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'LogReg/css/style1.css' %}"> -->
   <title>Code Social</title>
 </head>
 <body class="container">
+  <div class="overlay"></div>
   <header class="header">
-    <div class="header__left">
-      <a class="navbar-brand" href="#">The Wall</a>
-    </div>
     <div class="header__right">
-       {% if messages and request.session.attempt == 'login' %} {% for message in messages %}
-      <p class="navError">{{ message }}</p>
-      {% endfor %} {% endif %}
-      <form class="header__form" action="{% url 'LogReg:login' %}" method="POST">
+      <form class="header__form form" action="{% url 'LogReg:login' %}" method="POST">
         {% csrf_token %}
         <div class="form__group ">
           <input name="email" type="email" placeholder="Email" class="form__input">
@@ -34,50 +29,57 @@
           <button type="submit" class="btn btn--blue" name="attempt" value="login">Sign in</button>
         </div>
       </form>
+      {% if messages and request.session.attempt == 'login' %} {% for message in messages %}
+     <p class="navError">{{ message }}</p>
+     {% endfor %} {% endif %}
     </div>
   </header>
 
 
   <section class="content">
     <div class="register">
-      {% if messages and request.session.attempt == 'register' %} {% for message in messages %}
-     <p class="navError">{{ message }}</p>
-     {% endfor %} {% endif %}
       <div class="register__form">
         <form action="{% url 'LogReg:register' %}" method="POST" class="form">
-           {% csrf_token %}
+          {% csrf_token %}
           <div class="form-header">
             <h2 class="heading-secondary">New here? Please register and join us!</h2>
           </div>
           <div class="form__group">
-            <label class="form__label" for="inputFirstName">First Name</label>
             <input id="inputFirstName" type="text" name="first_name" placeholder="First Name" class="form__input" required>
+            <label class="form__label" for="inputFirstName">First Name</label>
           </div>
           <div class="form__group">
-            <label class="form__label" for="inputLastName">Last Name</label>
             <input id="inputLastName" type="text" name="last_name" placeholder="Last Name" class="form__input" required>
+            <label class="form__label" for="inputLastName">Last Name</label>
           </div>
           <div class="form__group">
-            <label class="form__label" for="inputEmail">Email address</label>
             <input id="inputEmail" type="email" name="email" class="form__input" placeholder="Email address" required>
+            <label class="form__label" for="inputEmail">Email address</label>
           </div>
           <div class="form__group">
-            <label class="form__label" for="inputPassword">Password</label>
             <input type="password" name="password" id="inputPassword" class="form__input" placeholder="Password" required>
+            <label class="form__label" for="inputPassword">Password</label>
           </div>
           <div class="form__group">
-            <label class="form__label" for="inputConfirmPassword">Confirm Password:</label>
             <input type="password" name="confirmPassword" id="inputConfirmPassword" class="form__input" placeholder="confirm password entry" required>
+            <label class="form__label" for="inputConfirmPassword">Confirm Password:</label>
           </div>
           <div class="form__group">
             <button type="submit" class="btn btn--blue" name="attempt" value="register">Register</button>
+          </div>
+          <div class="form__group">
+            {% if messages and request.session.attempt == 'register' %} {% for message in messages %}
+           <p class="navError">{{ message }}</p>
+           {% endfor %} {% endif %}
           </div>
         </form>
       </div>
 
       <div class="intro">
-        <h1>Code Social</h1>
-        <p>A place for Coding Dojo students past and present to socialize and talk about anything and everything, including code.</p>
+        <div class="intro__text">
+          <h1>Code Social</h1>
+          <p>A place for Coding Dojo students past and present to socialize and talk about anything and everything, including code.</p>
+        </div>
       </div>
 
     </div>
