@@ -9,7 +9,7 @@ class messageManager(models.Manager):
     def message_check(self, data, author):
         errors = []
         if len(data['message']) < 1:
-            errors.append('message', 'Message must be entered.')
+            errors.append(['message', 'Message must be entered.'])
 
         if errors:
             return [False, errors]
@@ -23,7 +23,7 @@ class commentManager(models.Manager):
     def comment_check(self, data, author, message_id):
         errors = []
         if len(data['comment']) < 1:
-            errors.append('comment', 'Comment must be entered.')
+            errors.append(['comment', 'Comment must be entered.'])
 
         if errors:
             return [False, errors]

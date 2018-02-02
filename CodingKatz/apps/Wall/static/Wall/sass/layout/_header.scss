@@ -1,0 +1,17 @@
+.header {
+  background-image: url("../img/tables.jpg");
+  background-size: auto 100vh;
+  background-repeat: no-repeat;
+  background-position: left top;
+  padding: 0 3rem 5rem 0;
+
+  &__greeting {
+    position: relative;
+    width: 80vw;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 1000px) {
+    padding: 0 3rem 3rem 0;
+  }
+}

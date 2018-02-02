@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:100,300,400,700');
 @import url('https://fonts.googleapis.com/css?family=Revalia');
+@import url('https://fonts.googleapis.com/css?family=Merienda+One');
 
 
 body {
@@ -24,12 +25,32 @@ h1 {
   // @media screen and (max-width: 1452px) {
   //   font-size: 1vw;
   // }
-  // @media screen and (max-width: 1350px) {
-  //   font-size: 3rem;
-  // }
+  @media screen and (max-width: 1000px) {
+    font-size: 3rem;
+  }
 }
 
 h2 {
   font-size: 1.5vw;
   margin-bottom: 1.5rem;
+}
+
+h5 {
+  font-weight: 700;
+}
+
+.header {
+
+  &__greeting {
+
+    & h1 {
+      font-family: 'Merienda One', cursive;
+      color: $color-white;
+      text-shadow: black 0.3em 0.3em 0.3em;
+    }
+  }
+}
+
+.error {
+  color: #da1c1c;
 }
