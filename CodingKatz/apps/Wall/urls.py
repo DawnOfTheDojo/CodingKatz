@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^comment/(?P<message_id>\d+)*$', views.comment, name='comment'),
     url(r'^deleteMessage/(?P<message_id>\d+)/$', views.deleteMessage, name="deleteMessage"),
     url(r'^deleteComment/(?P<comment_id>\d+)/$', views.deleteComment, name="deleteComment"),
-    url(r'^users/show/(?P<user_id>\d+)/$', views.show_user, name='show_user'),
+    # url(r'^users/show/(?P<user_id>\d+)/$', views.show_user, name='show_user'),
 ]

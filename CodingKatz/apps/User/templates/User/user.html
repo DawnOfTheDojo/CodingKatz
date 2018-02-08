@@ -69,12 +69,14 @@
         <h2>Leave a message for {{user.first_name}}</h2>
         <div class="flash_messages">
           {% if messages %}
-          {% for message in messages%}
+          {% for message in messages %}
+          {% if message.extra_tags == 'message' %}
           <p class="error">{{ message }}</p>
+          {% endif %}
           {% endfor %}
           {% endif %}
         </div>
-        <form action="{% url 'Wall:message' %}" method="post">
+        <form action="{% url 'User:userMessage' user.id %}" method="post">
           {% csrf_token %}
           <fieldset>
             <textarea name="message" rows="4" cols="90" placeholder="Write your message here"></textarea>
@@ -87,7 +89,7 @@
     <div class="row">
       <div id="messages" class="col-md-12">
         {% for message in all_messages %}
-        <h5><a href="{% url 'Wall:show_user' message.author.id %}">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
+        <h5><a href="{% url 'User:show_user' message.author.id %}">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
         <p class="message">{{ message.message }}</p>
 
 
@@ -96,32 +98,39 @@
         <div id="comments" class="toggle col-md-12">
           {% if message.id == comment.message.id %}
           <ul>
-            <h5><a href="{% url 'Wall:show_user' comment.author.id %}">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
+            <h5><a href="{% url 'User:show_user' comment.author.id %}">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
             <li>{{ comment.comment }}</li>
           </ul>
           {% endif %}
         </div>
         {% endfor %}
-        <div class="flash_messages">
-          {% if messages %}
-          {% for message in messages %}
-          <p class="error">{{message}}</p>
-          {% endfor %}
-          {% endif %}
-        </div>
           <h6 class="comment_label">Post a comment</h6>
-          <form action="{% url 'Wall:comment' message_id=message.id %}" method="post">
+          <form action="{% url 'User:userComment' user_id=user.id message_id=message.id %}" method="post">
             {% csrf_token %}
-            {% if messages %}
+            <!-- {% if messages %}
             {% for message in messages%}
             <p class="error">{{ message }}</p>
             {% endfor %}
-            {% endif %}
+            {% endif %} -->
             <div class="form-group">
               <textarea name="comment" rows="1" cols="60" placeholder="Write your comment here"></textarea>
             </div>
             <button class="btn btn-sm btn-primary submit" name="wall_posts" value="comment_submit" type="submit">Submit</button>
           </form>
+          <!-- CREATE ANCHOR TAG SO THAT WHEN PAGE REFRESHES FOR COMMENT OR ERROR THE PAGE LOADS AT THIS PARTICULAR MESSAGE AND COMMENT BOX -->
+          <div class="flash_messages">
+            {% if messages %}
+            {% for error in messages %}
+            {% with error.extra_tags|stringformat:'s' as tag %}
+            {% with message.id|stringformat:'s' as id %}
+            {% if tag == id %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            {% endfor %}
+            {% endif %}
+          </div>
           {% endfor %}
         </div>
     </div>

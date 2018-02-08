@@ -35,8 +35,10 @@
           <div class="form-group">
             <label class="flash_messages">Post a message
               {% if messages %}
-              {% for message in messages%}
+              {% for message in messages %}
+              {% if message.extra_tags == 'message' %}
               <p class="error">{{ message }}</p>
+              {% endif %}
               {% endfor %}
               {% endif %}
             </label>
@@ -55,7 +57,7 @@
         {% for message in all_messages %}
         <div class="message-group">
           <!-- MAIN MESSAGE SECTION -->
-          <h5><a href="{% url 'Wall:show_user' message.author.id %}" class="messages__link">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
+          <h5><a href="{% url 'User:show_user' message.author.id %}" class="messages__link">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
           <p class="message">{{ message.message }}</p>
           <!-- END MAIN MESSAGE SECTION -->
 
@@ -66,7 +68,7 @@
             <ul>
                {% for comment in comments %}
                {% if message.id == comment.message.id %}
-              <li></li><h5><a href="{% url 'Wall:show_user' comment.author.id %}" class="comments__link">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
+              <li></li><h5><a href="{% url 'User:show_user' comment.author.id %}" class="comments__link">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
               {{ comment.comment }}</li>
               {% endif %}
               {% endfor %}
@@ -79,9 +81,16 @@
             <h6 class="comment_label">Post a comment</h6>
             <form action="{% url 'Wall:comment' message_id=message.id %}" method="post">
               {% csrf_token %}
+              <!-- CREATE ANCHOR TAGS SO WHEN PAGE REFRESHES WITH ERROR OR NEW COMMENT PAGE LOADS TO SHOW ERROR OR NEW COMMENT -->
               {% if messages %}
-              {% for message in messages%}
-              <p class="error">{{ message }}</p>
+              {% for error in messages%}
+              {% with error.extra_tags|stringformat:'s' as tag %}
+              {% with message.id|stringformat:'s' as id %}
+              {% if tag == id %}
+              <p class="error">{{ error }}</p>
+              {% endif %}
+              {% endwith %}
+              {% endwith %}
               {% endfor %}
               {% endif %}
               <div class="form-group">

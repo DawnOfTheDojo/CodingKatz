@@ -44,4 +44,68 @@ def delete(request):
     #Return former user to landing page
     return redirect('LogReg:index')
 
+def message(request, user_id):
+    #Content from message
+    #Validate content
+    #Put message in database
+    #Return message to page for display
+    if request.method == "POST":
+        author = userDB.objects.get(id=request.session['user']['id'])
+        response = Message.objects.message_check(request.POST, author)
+        if not response[0]:
+            for error in response[1]:
+                messages.error(request, error[1], extra_tags='message')
+    author = userDB.objects.get(id = user_id)
+    context = {
+        'user': author,
+        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+        'comments': Comment.objects.all().order_by('id')
+    }
+    return render(request, 'User/user.html', context)
+
+def comment(request, message_id, user_id):
+    #Content from comment
+    #Validate content
+    #Put comment in database
+    #Return comment to page for display
+    if request.method == "POST":
+        author = userDB.objects.get(id=request.session['user']['id'])
+        response = Comment.objects.comment_check(request.POST, author, message_id)
+        if not response[0]:
+            for error in response[1]:
+                messages.error(request, error[1], extra_tags = message_id)
+    author = userDB.objects.get(id = user_id)
+    context = {
+        'user': author,
+        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+        'comments': Comment.objects.all().order_by('id')
+    }
+    return render(request, 'User/user.html', context)
+
+def deleteMessage(request, message_id):
+    #Figure out how to do confirmation for deletion (possibly pop up alert)
+
+    #Delete message from database
+
+    #Return user to page through redirect
+    return redirect('User:user')
+
+def deleteComment(request, comment_id):
+    #Figure out how to do confirmation for deletion (possibly pop up alert)
+
+    #Delete comment from database
+
+    #Return user to page through redirect
+    return redirect('User:user')
+
+#display user page with their messages and comments
+def show_user(request, user_id):
+    author = userDB.objects.get(id = user_id)
+    context = {
+        'user': author,
+        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+        'comments': Comment.objects.all().order_by('id')
+    }
+    return render(request, 'User/user.html', context)
+
 # Create your views here.

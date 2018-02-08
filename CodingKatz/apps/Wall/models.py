@@ -39,7 +39,7 @@ class Message(models.Model):
     author = models.ForeignKey(userDB, related_name='message_author', on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+# consider adding a location (wall vs user page) so when ppl add message to user's page it can be located on that user's page and not just the wall
     objects = messageManager()
 
 class Comment(models.Model):

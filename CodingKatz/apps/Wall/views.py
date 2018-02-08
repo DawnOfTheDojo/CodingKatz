@@ -28,7 +28,7 @@ def message(request):
         response = Message.objects.message_check(request.POST, author)
         if not response[0]:
             for error in response[1]:
-                messages.error(request, error[1])
+                messages.error(request, error[1], extra_tags='message')
     return redirect('Wall:wall')
 
 def comment(request, message_id):
@@ -41,7 +41,7 @@ def comment(request, message_id):
         response = Comment.objects.comment_check(request.POST, author, message_id)
         if not response[0]:
             for error in response[1]:
-                messages.error(request, error[1])
+                messages.error(request, error[1], extra_tags = message_id)
     return redirect('Wall:wall')
 
 def deleteMessage(request, message_id):
@@ -58,17 +58,17 @@ def deleteComment(request, comment_id):
     #Delete comment from database
 
     #Return user to page through redirect
-    return redirect('wall:wall')
+    return redirect('Wall:wall')
 
 #display user page with their messages and comments
-def show_user(request, user_id):
-    author = userDB.objects.get(id = user_id)
-    context = {
-        'user': author,
-        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
-        'comments': Comment.objects.all().order_by('id')
-    }
-    return render(request, 'Wall/user.html', context)
+# def show_user(request, user_id):
+#     author = userDB.objects.get(id = user_id)
+#     context = {
+#         'user': author,
+#         'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+#         'comments': Comment.objects.all().order_by('id')
+#     }
+#     return render(request, 'Wall/user.html', context)
 
 
 
