@@ -2,8 +2,11 @@
 from __future__ import unicode_literals
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from itertools import chain
+from operator import attrgetter
 from ..LogReg.models import userDB
 from ..Wall.models import Message, Comment
+from .models import Note
 
 def profile(request):
     #Confirm user id is logged in to view that page
@@ -44,21 +47,29 @@ def delete(request):
     #Return former user to landing page
     return redirect('LogReg:index')
 
-def message(request, user_id):
+def note(request, user_id):
     #Content from message
     #Validate content
     #Put message in database
     #Return message to page for display
     if request.method == "POST":
         author = userDB.objects.get(id=request.session['user']['id'])
-        response = Message.objects.message_check(request.POST, author)
+        response = Note.objects.note_check(request.POST, author, user_id)
         if not response[0]:
             for error in response[1]:
                 messages.error(request, error[1], extra_tags='message')
-    author = userDB.objects.get(id = user_id)
+    user = userDB.objects.get(id = user_id)
+    all_messages = Message.objects.filter(author=user).order_by('id').reverse()
+
+    all_notes =  Note.objects.filter(recipient=user).order_by('id').reverse()
+
+    all_user_correspondence = sorted(
+    chain(all_notes, all_messages),
+    key=attrgetter('created_at'))
+
     context = {
-        'user': author,
-        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+        'user': user,
+        'all_correspondence': all_user_correspondence,
         'comments': Comment.objects.all().order_by('id')
     }
     return render(request, 'User/user.html', context)
@@ -74,10 +85,18 @@ def comment(request, message_id, user_id):
         if not response[0]:
             for error in response[1]:
                 messages.error(request, error[1], extra_tags = message_id)
-    author = userDB.objects.get(id = user_id)
+    user = userDB.objects.get(id = user_id)
+    all_messages = Message.objects.filter(author=user).order_by('id').reverse()
+
+    all_notes =  Note.objects.filter(recipient=user).order_by('id').reverse()
+
+    all_user_correspondence = sorted(
+    chain(all_notes, all_messages),
+    key=attrgetter('created_at'))
+
     context = {
-        'user': author,
-        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+        'user': user,
+        'all_correspondence': all_user_correspondence,
         'comments': Comment.objects.all().order_by('id')
     }
     return render(request, 'User/user.html', context)
@@ -100,10 +119,18 @@ def deleteComment(request, comment_id):
 
 #display user page with their messages and comments
 def show_user(request, user_id):
-    author = userDB.objects.get(id = user_id)
+    recipient = userDB.objects.get(id = user_id)
+    all_messages = Message.objects.filter(author=recipient).order_by('id').reverse()
+
+    all_notes =  Note.objects.filter(recipient=recipient).order_by('id').reverse()
+
+    all_recipient_correspondence = sorted(
+    chain(all_notes, all_messages),
+    key=attrgetter('created_at'))
+
     context = {
-        'user': author,
-        'all_messages': Message.objects.filter(author=author).order_by('id').reverse(),
+        'user': recipient,
+        'all_correspondence': all_recipient_correspondence,
         'comments': Comment.objects.all().order_by('id')
     }
     return render(request, 'User/user.html', context)

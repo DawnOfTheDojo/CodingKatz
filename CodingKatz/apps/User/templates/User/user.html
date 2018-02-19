@@ -64,9 +64,9 @@
   <div id="main" class="container">
 
     <div id="post" class="row">
-      <!-- user info then messages-->
+      <!-- user info then notes and messages -->
       <div class="col-md-12">
-        <h2>Leave a message for {{user.first_name}}</h2>
+        <h2>Leave a note for {{user.first_name}}</h2>
         <div class="flash_messages">
           {% if messages %}
           {% for message in messages %}
@@ -76,11 +76,11 @@
           {% endfor %}
           {% endif %}
         </div>
-        <form action="{% url 'User:userMessage' user.id %}" method="post">
+        <form action="{% url 'User:note' user.id %}" method="post">
           {% csrf_token %}
           <fieldset>
-            <textarea name="message" rows="4" cols="90" placeholder="Write your message here"></textarea>
-            <button class="btn btn-primary btn-block submit" name="button" value="message_submit" type="submit">Submit</button>
+            <textarea name="note" rows="4" cols="90" placeholder="Write your note here"></textarea>
+            <button class="btn btn-primary btn-block submit" name="button" value="note_submit" type="submit">Submit</button>
           </fieldset>
         </form>
       </div>
@@ -88,11 +88,14 @@
 
     <div class="row">
       <div id="messages" class="col-md-12">
-        {% for message in all_messages %}
+        {% for message in all_correspondence %}
         <h5><a href="{% url 'User:show_user' message.author.id %}">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
+        {% if message.message %}
         <p class="message">{{ message.message }}</p>
-
-
+        {% endif %}
+        {% if message.note %}
+        <p class="message">{{ message.note }}</p>
+        {% endif %}
 
         {% for comment in comments %}
         <div id="comments" class="toggle col-md-12">

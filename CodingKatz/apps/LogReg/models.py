@@ -54,7 +54,7 @@ class userDBManager(models.Manager):
                 return [True, user]
 
     #edit user info
-    def check_info_edit(self, data, id):
+    def check_info_edit(self, data, user_id):
         print (data)
         errors = []
         if len(data['first_name']) < 2:
@@ -70,7 +70,7 @@ class userDBManager(models.Manager):
         if errors:
             return [False, errors]
         else:
-            edit_user = userDB.objects.get(id=id)
+            edit_user = userDB.objects.get(id=user_id)
             if data['email'] != edit_user.email:
                 user_email_check = userDB.objects.filter(email=data['email'])
                 if user_email_check:
