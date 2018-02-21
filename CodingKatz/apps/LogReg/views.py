@@ -7,15 +7,6 @@ from .models import userDB
 def index(request):
     return render(request, 'LogReg/index.html')
 
-# def index1(request):
-#     return render(request, 'LogReg/index1.html')
-#
-# def index2(request):
-#     return render(request, 'LogReg/index2.html')
-#
-# def index3(request):
-#     return render(request, 'LogReg/index3.html')
-
 def log_reg(request):
     if request.method == "POST":
         # print ('attempt: ', request.POST['attempt'])

@@ -65,12 +65,12 @@
             <label class="form__label" for="inputConfirmPassword">Confirm Password:</label>
           </div>
           <div class="form__group">
-            <button type="submit" class="btn btn--blue" name="attempt" value="register">Register</button>
+            {% if messages and request.session.attempt == 'register' %} {% for message in messages %}
+            <p class="navError">{{ message }}</p>
+            {% endfor %} {% endif %}
           </div>
           <div class="form__group">
-            {% if messages and request.session.attempt == 'register' %} {% for message in messages %}
-           <p class="navError">{{ message }}</p>
-           {% endfor %} {% endif %}
+            <button type="submit" class="btn btn--blue" name="attempt" value="register">Register</button>
           </div>
         </form>
       </div>
