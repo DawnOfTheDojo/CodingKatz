@@ -5,9 +5,6 @@
   grid-template-areas: "header"
                       "posts";
 
-  background-image: url("../img/tables.jpg");
-  background-size: cover;
-  background-attachment: fixed;
     @media screen and (max-width: 1000px) {
       grid-template-rows: 17vh 1fr;
     }
@@ -19,10 +16,23 @@
     }
 }
 
+.overlay,
 .header {
-  grid-area: header;
   position: fixed;
   width: 100vw;
+  background-image: url("../img/pub.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.overlay {
+  height: 100%;
+  z-index: -1;
+}
+
+.header {
+  grid-area: header;
+  z-index: 100;
 
   @media screen and (max-width: 700px) {
     display: grid;
@@ -83,7 +93,6 @@
 }
 
 .message-group {
-
   display: flex;
   flex-direction: column;
   

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-{% load staticfiles %}
+{% load staticfiles %} 
 
 <head>
   <meta charset="utf-8">
@@ -10,134 +10,125 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
   <!-- css stylesheets -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <![endif]-->
-  <link rel="stylesheet" href="{% static 'wall/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
   <title>{{ user.first_name }}'s Wall</title>
 </head>
 
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="navbar-form navbar-right">
-          <li><a href="{% url 'Wall:wall' %}">The Wall</a></li>
-          <li><a href="{% url 'User:profile' %}">Profile</a></li>
-          <li><a href="{% url 'LogReg:logout' %}">Logout</a></li>
-        </ul>
-      </div>
-      <!--/.navbar-collapse -->
+<body class="grid">
+  <div class="overlay"></div>
+  <header class="header">
+    <nav class="navbar">
+      <ul class="top-nav">
+        <li class="top-nav__item">
+          <a href="{% url 'Wall:wall' %}" class="top-nav__link">Community Wall</a>
+        </li>
+        <li class="top-nav__item">
+          <a href="{% url 'User:profile' %}" class="top-nav__link"> Edit Profile</a>
+        </li>
+        <li class="top-nav__item">
+          <a href="{% url 'LogReg:logout' %}" class="top-nav__link">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="header__greeting">
+      <h1>{% if "user" in request.session %}
+        {{ user.first_name }}'{% if user.first_name|last != "s" %}s
+        {% endif %}
+         Wall
+        {% endif %}</h1>
+      <h4>
+        Member Since:
+        <!-- time is showing 3 hours ahead but this fix does not work -->
+        {% load tz %}
+        {% localtime on %}
+        {{user.created_at}}
+        {% endlocaltime %}
+      </h4>
     </div>
-  </nav>
+  </header>
 
-  <div class="row">
-    <header class="jumbotron jumboText">
-      <div class="container">
-        <div class="textOverImg col-md-4">
-          <h2>{{user.first_name}} {{user.last_name}}</h2>
-          <h4>
-                  Member Since:
-                  <!-- time is showing 3 hours ahead but this fix does not work -->
-                  {% load tz %}
-                  {% localtime on %}
-                  {{user.created_at}}
-                  {% endlocaltime %}
-                </h4>
-        </div>
-      </div>
-    </header>
-  </div>
+  <div id="main" class="content">
 
-  <div id="main" class="container">
-
-    <div id="post" class="row">
+    <section id="note" class="form">
       <!-- user info then notes and messages -->
-      <div class="col-md-12">
-        <h2>Leave a note for {{user.first_name}}</h2>
-        <div class="flash_messages">
-          {% if messages %}
-          {% for message in messages %}
-          {% if message.extra_tags == 'message' %}
-          <p class="error">{{ message }}</p>
-          {% endif %}
-          {% endfor %}
-          {% endif %}
-        </div>
-        <form action="{% url 'User:note' user.id %}" method="post">
-          {% csrf_token %}
-          <fieldset>
-            <textarea name="note" rows="4" cols="90" placeholder="Write your note here"></textarea>
-            <button class="btn btn-primary btn-block submit" name="button" value="note_submit" type="submit">Submit</button>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="messages" class="col-md-12">
-        {% for message in all_correspondence %}
-        <h5><a href="{% url 'User:show_user' message.author.id %}">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
-        {% if message.message %}
-        <p class="message">{{ message.message }}</p>
-        {% endif %}
-        {% if message.note %}
-        <p class="message">{{ message.note }}</p>
-        {% endif %}
-
-        {% for comment in comments %}
-        <div id="comments" class="toggle col-md-12">
-          {% if message.id == comment.message.id %}
-          <ul>
-            <h5><a href="{% url 'User:show_user' comment.author.id %}">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
-            <li>{{ comment.comment }}</li>
-          </ul>
-          {% endif %}
-        </div>
-        {% endfor %}
-          <h6 class="comment_label">Post a comment</h6>
-          <form action="{% url 'User:userComment' user_id=user.id message_id=message.id %}" method="post">
-            {% csrf_token %}
-            <!-- {% if messages %}
-            {% for message in messages%}
-            <p class="error">{{ message }}</p>
-            {% endfor %}
-            {% endif %} -->
-            <div class="form-group">
-              <textarea name="comment" rows="1" cols="60" placeholder="Write your comment here"></textarea>
-            </div>
-            <button class="btn btn-sm btn-primary submit" name="wall_posts" value="comment_submit" type="submit">Submit</button>
-          </form>
-          <!-- CREATE ANCHOR TAG SO THAT WHEN PAGE REFRESHES FOR COMMENT OR ERROR THE PAGE LOADS AT THIS PARTICULAR MESSAGE AND COMMENT BOX -->
-          <div class="flash_messages">
+      <h2>Leave a note for {{user.first_name}}</h2>
+      <form action="{% url 'User:note' user.id %}" method="post">
+      {% csrf_token %}
+      <fieldset>
+        <div class="form-group">
+          <label class="flash_messages">
             {% if messages %}
-            {% for error in messages %}
-            {% with error.extra_tags|stringformat:'s' as tag %}
-            {% with message.id|stringformat:'s' as id %}
-            {% if tag == id %}
-            <p class="error">{{ error }}</p>
+            {% for message in messages %}
+            {% if message.extra_tags == 'message' %}
+            <p class="error">{{ message }}</p>
             {% endif %}
-            {% endwith %}
-            {% endwith %}
             {% endfor %}
             {% endif %}
-          </div>
-          {% endfor %}
+          </label>            
         </div>
-    </div>
-  </div>
-</body>
-
-</html>
+        <div class="form-group">
+          <textarea name="note" rows="4" class="message-input"></textarea>
+          <button class="btn btn--blue submit" name="button" value="note_submit" type="submit">Submit</button>
+        </div>
+      </fieldset>
+        </form>
+        
+        <div class="notes">
+          {% for message in all_correspondence %}
+          <div class="note-group">
+            <h5><a href="{% url 'User:show_user' message.author.id %}" class="notes__link">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
+            {% if message.message %}
+            <p class="notes">{{ message.message }}</p>
+            {% endif %}
+            {% if message.note %}
+            <p class="notes">{{ message.note }}</p>
+            {% endif %}
+            
+            <div class="comments">
+              <!-- SINGLE COMMENT SECTION -->
+              <div class="comment">
+                {% if comments %}
+                <ul>
+                  {% for comment in comments %} {% if message.id == comment.message.id %}
+                  <li></li>
+                  <h5>
+                    <a href="{% url 'User:show_user' comment.author.id %}" class="comments__link">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
+                    {{ comment.comment }}</li>
+                    {% endif %} {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+                <div class="comment-form">
+                  <h6 class="comment_label">Post a comment</h6>
+                  <form action="{% url 'User:userComment' user_id=user.id message_id=message.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="flash_messages">
+                      {% if messages %}
+                      {% for error in messages%}
+                      {% with error.extra_tags|stringformat:'s' as tag %}
+                      {% with message.id|stringformat:'s' as id %}
+                      {% if tag == id %}
+                      <p class="error">{{ error }}</p>
+                      {% endif %}
+                      {% endwith %}
+                      {% endwith %}
+                      {% endfor %}
+                      {% endif %}
+                    </div>
+                    <div class="form-group">
+                      <textarea name="comment" class="comment-input" rows="1" cols="60"></textarea>
+                      <button class="btn btn--green submit" name="wall_posts" value="comment_submit" type="submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- CREATE ANCHOR TAG SO THAT WHEN PAGE REFRESHES FOR COMMENT OR ERROR THE PAGE LOADS AT THIS PARTICULAR MESSAGE AND COMMENT BOX -->
+                
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        </body>
+        
+        </html>
+        

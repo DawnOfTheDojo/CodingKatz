@@ -21,6 +21,7 @@ def profile(request):
 
 #validates information and updates user accordingly
 def edit(request):
+    print(request)
     #Content from edit form
     if request.method == 'POST':
     #Validate content from form

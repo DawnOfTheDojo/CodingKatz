@@ -14,10 +14,12 @@
 </head>
 
 <body class="grid">
+  <div class="overlay"></div>
   <header class="header">
     <nav class="navbar">
           <ul class="top-nav">
-            <li class="top-nav__item"><a href="{% url 'User:profile' %}" class="top-nav__link">Profile</a></li>
+            <li class="top-nav__item"><a href="{% url 'User:show_user' user.id %}" class="top-nav__link">My wall</a></li>
+            <li class="top-nav__item"><a href="{% url 'User:profile' %}" class="top-nav__link">Edit Profile</a></li>
             <li class="top-nav__item"><a href="{% url 'LogReg:logout' %}" class="top-nav__link">Logout</a></li>
           </ul>
     </nav>
@@ -33,7 +35,7 @@
         {% csrf_token %}
         <fieldset>
           <div class="form-group">
-            <label class="flash_messages">Post a message
+            <label class="flash_messages"><h2>Post a message</h2>
               {% if messages %}
               {% for message in messages %}
               {% if message.extra_tags == 'message' %}
@@ -63,19 +65,19 @@
 
           <div class="comments">
           <!-- SINGLE COMMENT SECTION -->
-          <div class="comment">
-            {% if comments %}
-            <ul>
-               {% for comment in comments %}
-               {% if message.id == comment.message.id %}
-              <li></li><h5><a href="{% url 'User:show_user' comment.author.id %}" class="comments__link">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
-              {{ comment.comment }}</li>
+            <div class="comment">
+              {% if comments %}
+              <ul>
+                {% for comment in comments %} {% if message.id == comment.message.id %}
+                <li>
+                  <h5>
+                    <a href="{% url 'User:show_user' comment.author.id %}" class="comments__link">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
+                  {{ comment.comment }}</li>
+                {% endif %} {% endfor %}
+              </ul>
               {% endif %}
-              {% endfor %}
-            </ul>
-            {% endif %}
-          </div>
-          <!-- END SINGLE COMMENT SECTION -->
+            </div>
+            <!-- END SINGLE COMMENT SECTION -->
           <!-- COMMENT FORM -->
           <div class="comment-form">
             <h6 class="comment_label">Post a comment</h6>

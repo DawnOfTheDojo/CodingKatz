@@ -166,19 +166,16 @@ h2 {
   font-size: 1.5rem;
   border: none;
   cursor: pointer; }
-
 .btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
   .btn:hover::after {
     transform: scaleX(1.4) scaleY(1.6);
     opacity: 0; }
-
 .btn:active, .btn:focus {
   outline: none;
   transform: translateY(-1px);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
-
 .btn--blue {
   background-color: #0f1fb3;
   color: #fff; }
@@ -207,7 +204,6 @@ h2 {
       border-bottom: 3px solid #ff7730; }
   .form__input::-webkit-input-placeholder {
     color: #222; }
-
 .form__label {
   font-size: 1vw;
   font-weight: 700;
@@ -215,7 +211,6 @@ h2 {
   margin-bottom: .5rem;
   display: block;
   transition: all .3s; }
-
 .form__input:placeholder-shown + .form__label {
   opacity: 0;
   visibility: hidden;
@@ -223,7 +218,9 @@ h2 {
 
 .navError {
   color: red;
-  text-align: right;
+  padding: 0 2rem;
+  max-width: 35rem;
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.8); }
 
 .error {
@@ -289,3 +286,5 @@ h2 {
       align-content: center; }
       .content .register .intro h1 {
         margin-bottom: 3rem; }
+
+/*# sourceMappingURL=style.css.map */

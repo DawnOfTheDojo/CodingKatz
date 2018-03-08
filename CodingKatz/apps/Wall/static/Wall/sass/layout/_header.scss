@@ -1,9 +1,8 @@
 .header {
-  background-image: url("../img/tables.jpg");
   background-size: auto 100vh;
   background-repeat: no-repeat;
   background-position: left top;
-  padding: 0 3rem 5rem 0;
+  padding: 0 3rem 3rem 0;
 
   &__greeting {
     position: relative;
@@ -14,10 +13,10 @@
   }
 
   @media screen and (max-width: 1000px) {
-    padding: 0 3rem 3rem 0;
+    padding: 0 3rem 1rem 0;
   }
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 900px) {
     text-align: center;
-    padding: 0 1rem 1rem 0;
+    padding: 0 2rem 1rem 0;
   }
 }

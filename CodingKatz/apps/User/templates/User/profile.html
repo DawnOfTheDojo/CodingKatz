@@ -10,14 +10,18 @@
 
     <!-- css stylesheets -->
     <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
-    <title>{{user.first_name}}'s Page</title>
+    <title>{{user.first_name}}'s Profile - Edit</title>
   </head>
   <body class="grid">
+    <div class="overlay"></div>
     <header class="header">
       <nav class="navbar">
         <ul class="top-nav">         
           <li class="top-nav__item">
-            <a href="{% url 'Wall:wall' %}"" class="top-nav__link"">The Wall</a>
+            <a href="{% url 'Wall:wall' %}"" class="top-nav__link"">Community Wall</a>
+          </li>
+          <li class="top-nav__item">
+            <a href="{% url 'User:show_user' user.id %}" class="top-nav__link">My wall</a>
           </li>
           <li class="top-nav__item">
             <a href="{% url 'LogReg:logout' %}"" class="top-nav__link"">Logout</a>
@@ -25,7 +29,7 @@
         </ul>
       </nav>
       <div class="header__greeting">
-        <h1>{{user.first_name}}'s Page</h1>
+        <h1>{{user.first_name}}'{% if user.first_name|last != "s" %}s {% endif %} Profile - Edit</h1>
       </div>
     </header>
 
@@ -33,7 +37,7 @@
     <section class="content">
       <div class="user-edit">
         <div class="user-edit__form">
-          <form action="{% url 'User:edit' %}" method="POST">
+          <form action="{% url 'User:edit' %}" method="POST" class="form">
             {% csrf_token %}
             <div class="form-header">
               <h2>Edit Your Info</h2>

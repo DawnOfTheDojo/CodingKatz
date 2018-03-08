@@ -1,4 +1,18 @@
 .form {
+  margin: 0 auto;
+  
+  & .form-group {
+    margin: 0 auto;
+  }
+
+  & label {
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-left: 2rem;
+    margin-bottom: .5rem;
+    display: block;
+    transition: all .3s;
+  }
   
   &__input {
     font-size: 1.2rem;
@@ -22,36 +36,42 @@
 
       &:invalid {
         border-bottom: 3px solid $color-orange;
-      }
-    }
-
+      }  
+    }  
 
     &::-webkit-input-placeholder {
       color: $color-grey-dark;
-    }
-  }
-
-  &__label {
-    font-size: 1vw;
-    font-weight: 700;
-    margin-left: 2rem;
-    margin-bottom: .5rem;
-    display: block;
-    transition: all .3s;
-  }
-
-  &__input:placeholder-shown + &__label {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-4rem);
-  }
-
+    }  
+  }  
 }
 
-.navError {
-  color: red;
-  text-align: right;
-  background-color: rgba($color-white, .8);
+textarea {
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 700;
+  color: inherit;
+  padding: .75rem 1.2rem;
+  border-radius: 2px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: 1em;
+  min-width: 15rem;
+  display: block;
+  transition: all .3s;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 1rem 2rem rgba($color-black, .1);
+    border-bottom: 3px solid $color-blue;
+
+    &:invalid {
+      border-bottom: 3px solid $color-orange;
+    }
+  }
+}
+
+.comment-form {
+  margin-top: 1rem;
 }
 
 .error {

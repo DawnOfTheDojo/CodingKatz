@@ -157,15 +157,26 @@ h1 {
   @media screen and (min-width: 1000px) {
     h1 {
       font-size: 4.5rem; } }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 750px) {
     h1 {
-      font-size: 2.5rem; } }
+      font-size: 3rem; } }
 
 h2 {
   font-size: 1.5vw;
   margin-bottom: 1.5rem; }
 
-.header__greeting h1 {
+h4 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #fff; }
+  @media screen and (max-width: 900px) {
+    h4 {
+      font-size: 2vw; } }
+  @media screen and (max-width: 750px) {
+    h4 {
+      font-size: 1.5rem; } }
+
+.header__greeting h1, .header__greeting h4 {
   color: #fff;
   text-shadow: black 0.3em 0.3em 0.3em; }
 
@@ -174,8 +185,8 @@ h2 {
 
 .btn, .btn:link, .btn:visited {
   text-transform: uppercase;
-  padding: 1.2rem 2rem;
-  display: inline-block;
+  padding: .75rem 1.5rem;
+  display: block;
   border-radius: 5rem;
   transition: all .2s;
   font-size: 1.5rem;
@@ -196,45 +207,68 @@ h2 {
   color: #fff; }
   .btn--blue::after {
     background-color: #0f1fb3; }
+.btn--green {
+  background-color: #12b435;
+  color: #fff; }
+  .btn--green::after {
+    background-color: #12b435; }
 
-.form__input {
+.form {
+  margin: 0 auto; }
+  .form .form-group {
+    margin: 0 auto; }
+  .form label {
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-left: 2rem;
+    margin-bottom: .5rem;
+    display: block;
+    transition: all .3s; }
+  .form__input {
+    font-size: 1.2rem;
+    font-family: inherit;
+    font-weight: 700;
+    color: inherit;
+    padding: .75rem 1.2rem;
+    border-radius: 2px;
+    background-clip: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-bottom: 3px solid transparent;
+    width: 80%;
+    min-width: 15rem;
+    display: block;
+    transition: all .3s; }
+    .form__input:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+      border-bottom: 3px solid #0f1fb3; }
+      .form__input:focus:invalid {
+        border-bottom: 3px solid #ff7730; }
+    .form__input::-webkit-input-placeholder {
+      color: #222; }
+
+textarea {
   font-size: 1.2rem;
   font-family: inherit;
   font-weight: 700;
   color: inherit;
   padding: .75rem 1.2rem;
   border-radius: 2px;
-  background-clip: rgba(255, 255, 255, 0.5);
   border: none;
   border-bottom: 3px solid transparent;
-  width: 80%;
+  margin-bottom: 1em;
   min-width: 15rem;
   display: block;
   transition: all .3s; }
-  .form__input:focus {
+  textarea:focus {
     outline: none;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
     border-bottom: 3px solid #0f1fb3; }
-    .form__input:focus:invalid {
+    textarea:focus:invalid {
       border-bottom: 3px solid #ff7730; }
-  .form__input::-webkit-input-placeholder {
-    color: #222; }
-.form__label {
-  font-size: 1vw;
-  font-weight: 700;
-  margin-left: 2rem;
-  margin-bottom: .5rem;
-  display: block;
-  transition: all .3s; }
-.form__input:placeholder-shown + .form__label {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-4rem); }
 
-.navError {
-  color: red;
-  text-align: right;
-  background-color: rgba(255, 255, 255, 0.8); }
+.comment-form {
+  margin-top: 1rem; }
 
 .error {
   color: #da1c1c;
@@ -281,11 +315,10 @@ h2 {
     z-index: 10; }
 
 .header {
-  background-image: url("../img/tables.jpg");
   background-size: auto 100vh;
   background-repeat: no-repeat;
   background-position: left top;
-  padding: 0 3rem 5rem 0; }
+  padding: 0 3rem 3rem 0; }
   .header__greeting {
     position: relative;
     width: 80vw;
@@ -293,34 +326,45 @@ h2 {
     grid-area: greeting; }
   @media screen and (max-width: 1000px) {
     .header {
-      padding: 0 3rem 3rem 0; } }
-  @media screen and (max-width: 700px) {
+      padding: 0 3rem 1rem 0; } }
+  @media screen and (max-width: 900px) {
     .header {
       text-align: center;
-      padding: 0 1rem 1rem 0; } }
+      padding: 0 2rem 1rem 0; } }
 
 .grid {
   display: grid;
   justify-content: center;
-  grid-template-rows: 17rem 1fr;
-  grid-template-areas: "header" "posts";
-  background-image: url("../img/pub.jpg");
-  background-size: cover;
-  background-attachment: fixed; }
-  @media screen and (max-width: 1000px) {
-    .grid {
-      grid-template-rows: 17vh 1fr; } }
+  grid-template-rows: 20rem 1fr;
+  grid-template-areas: "header" "notes"; }
   @media screen and (max-width: 900px) {
     .grid {
-      grid-template-rows: 15vh 1fr; } }
+      grid-template-rows: 16vh 1fr; } }
+  @media screen and (max-width: 800px) {
+    .grid {
+      grid-template-rows: 14vh 1fr; } }
   @media screen and (max-width: 700px) {
     .grid {
       grid-template-rows: 12vh 1fr; } }
+  @media screen and (max-width: 600px) {
+    .grid {
+      grid-template-rows: 11vh 1fr; } }
+
+.overlay,
+.header {
+  position: fixed;
+  width: 100vw;
+  background-image: url("../img/gathering.jpg");
+  background-size: cover;
+  background-attachment: fixed; }
+
+.overlay {
+  height: 100%;
+  z-index: -1; }
 
 .header {
   grid-area: header;
-  position: fixed;
-  width: 100vw; }
+  z-index: 100; }
   @media screen and (max-width: 700px) {
     .header {
       display: grid;
@@ -343,13 +387,51 @@ h2 {
       margin-top: 1rem; } }
   @media screen and (max-width: 900px) {
     .content {
-      width: 70vw; } }
+      width: 70vw;
+      margin-top: 4rem; } }
   @media screen and (max-width: 800px) {
     .content {
       width: 80vw; } }
   @media screen and (max-width: 600px) {
     .content {
       width: 90vw; } }
+
+.notes__link:link, .notes__link:visited,
+.messages__link:link,
+.messages__link:visited,
+.comments__link:link,
+.comments__link:visited {
+  color: #0f1fb3;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  text-decoration: none; }
+.notes__link:hover,
+.messages__link:hover,
+.comments__link:hover {
+  color: orangered; }
+
+.notes,
+.messages {
+  display: flex;
+  flex-direction: column; }
+
+.note-group {
+  display: flex;
+  flex-direction: column; }
+  .note-group:not(:first-of-type) {
+    border-top: 2px solid rgba(161, 2, 24, 0.3);
+    padding-top: 1rem; }
+  .note-group:not(:last-of-type) {
+    margin-bottom: 2rem; }
+
+.comments {
+  width: 95%;
+  align-self: flex-end; }
+
+.comment li {
+  border-top: 2px solid rgba(119, 119, 119, 0.3);
+  margin-top: 1rem; }
 
 .form-group {
   display: flex;
